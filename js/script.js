@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   })
 
+//changing color options based on design choice
   tshirtDesign.addEventListener('change', (event) => {
     if(event.target.value === 'js puns'){
       for(let i=0; i<tshirtColor.options.length; i++){
@@ -41,6 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
     }
+    // if the design theme selection is Select Theme than show all color options
       else{
         for(var i=0; i<tshirtColor.options.length; i++){
           tshirtColor.options[i].style.display = 'block';
