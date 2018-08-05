@@ -40,7 +40,13 @@ document.addEventListener('DOMContentLoaded', () => {
           tshirtColor.options[i].style.display = 'block';
         }
       }
-    };
+    }
+      else{
+        for(var i=0; i<tshirtColor.options.length; i++){
+          tshirtColor.options[i].style.display = 'block';
+      }
+    }
+
   });
 
 
