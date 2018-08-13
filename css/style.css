@@ -149,6 +149,10 @@ button:hover {
   clear: both;
 }
 
+.disabled{
+    border:5px solid red;
+}
+
 /* ================================= 
   Media Queries
 ==================================== */

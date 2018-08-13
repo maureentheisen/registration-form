@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const design = document.getElementById('design');
   const shirtColor = document.getElementById('color');
   const activities = document.querySelectorAll('input[type=checkbox]');
+  const activity = document.querySelector('.activities');
 
 otherJobTitle.style.display = 'none';
 
@@ -47,9 +48,35 @@ function filterChoice() {
 //chance color options based on the design choice
 design.addEventListener("change", filterChoice, false);
 
+let timeSlot;
+let tuesdayMorning = 'Tuesday 9am-12pm';
+let tuesdayAfternoon = 'Tuesday 1pm-4pm';
+let wednesdayAfternoon = 'Wednesday 1pm-4pm';
+let wednesdayMorning = 'Wednesday 9am-12pm';
+
+function checkConflict() {
+    for (let i = 0; i < activities.length; i++) {
+        if (
+            (activities[i].checked) &&
+            (activities[i].parentNode.textContent.includes(tuesdayAfternoon))
+        ) {
+            timeSlot = tuesdayAfternoon;
+        }
+
+        else if(
+            (activities[i].checked) &&
+            (activities[i].parentNode.textContent.includes(tuesdayAfternoon))
+        )
+
+        if(activities[i].parentNode.textContent.includes(timeSlot)){
+            activities[i].parentNode.classList.add('disabled');
+        }
+    }
 
 
+}
 
+activity.addEventListener("change", checkConflict, false);
 
 
 });
