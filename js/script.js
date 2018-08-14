@@ -51,8 +51,6 @@ design.addEventListener("change", filterChoice, false);
 let timeSlot;
 let tuesdayMorning = 'Tuesday 9am-12pm';
 let tuesdayAfternoon = 'Tuesday 1pm-4pm';
-let wednesdayAfternoon = 'Wednesday 1pm-4pm';
-let wednesdayMorning = 'Wednesday 9am-12pm';
 
 function checkConflict() {
     for (let i = 0; i < activities.length; i++) {
@@ -62,16 +60,21 @@ function checkConflict() {
         ) {
             timeSlot = tuesdayAfternoon;
         }
-
         else if(
             (activities[i].checked) &&
-            (activities[i].parentNode.textContent.includes(tuesdayAfternoon))
-        )
+            (activities[i].parentNode.textContent.includes(tuesdayMorning))
+        ) {
+            timeSlot = tuesdayMorning;
+        }
 
         if(activities[i].parentNode.textContent.includes(timeSlot)){
             activities[i].parentNode.classList.add('disabled');
+        } else {
+
         }
     }
+
+
 
 
 }
