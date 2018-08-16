@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const creditCard = document.getElementById('credit-card');
   const paypal = creditCard.nextElementSibling;
   const bitcoin = paypal.nextElementSibling;
-  const name = document.getElementById("name");
+  const nameInput = document.getElementById("name");
 
 
 
@@ -126,23 +126,27 @@ function payment() {
 //FORM VALIDATION
 
 const nameError = document.createElement('div');
-nameError.innerHTML="error";
-nameError.insertBefore(nameError, name);
+const nameErrorText = document.createTextNode("enter your name");
+const fieldSetBasic = nameInput.parentNode;
 
 
-function formValidation() {
+
+nameError.setAttribute('id','name-error');
+nameError.appendChild(nameErrorText);
 
 
-    // create a new div element
-    var newDiv = document.createElement("p");
-    // and give it some content
-    var newContent = document.createTextNode("Hi there and greetings!");
-    // add the text node to the newly created div
-    newDiv.appendChild(newContent);
 
-    // add the newly created element and its content into the DOM
-    var currentDiv = getElementById('test').parentNode;
-    document.body.insertBefore(newDiv, currentDiv);
+
+
+
+function formValidation(e) {
+  e.preventDefault();
+  if(nameInput.value === ''){
+      alert('hello');
+
+      fieldSetBasic.insertBefore(nameError, nameInput);
+  }
+
 
 }
 
@@ -150,6 +154,3 @@ register.addEventListener("click", formValidation, false);
 
 
 });
-
-
-
