@@ -6,6 +6,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const shirtColor = document.getElementById('color');
   const activities = document.querySelectorAll('input[type=checkbox]');
   const activity = document.querySelector('.activities');
+  const paymentType = document.getElementById('payment');
+ const register = document.getElementsByTagName("button")[0];
+  const creditCard = document.getElementById('credit-card');
+  const paypal = creditCard.nextElementSibling;
+  const bitcoin = paypal.nextElementSibling;
+  const name = document.getElementById("name");
+
+
 
 otherJobTitle.style.display = 'none';
 
@@ -82,4 +90,66 @@ function checkConflict() {
 activity.addEventListener("change", checkConflict, false);
 
 
+paymentType.value = "credit card";
+paypal.style.display = 'none';
+bitcoin.style.display = 'none';
+
+paymentType.addEventListener("change", payment, false);
+
+function payment() {
+    if (paymentType.value === 'select_method') {
+        register.disabled = true;
+    }
+    else if (paymentType.value === 'paypal') {
+        paypal.style.display = 'block';
+        creditCard.style.display = 'none';
+        bitcoin.style.display = 'none';
+    } else if (paymentType.value === 'creditCard') {
+        paypal.style.display = 'none';
+        creditCard.style.display = 'block';
+        bitcoin.style.display = 'none';
+    } else if (paymentType.value === 'bitcoin') {
+        paypal.style.display = 'none';
+        creditCard.style.display = 'none';
+        bitcoin.style.display = 'block';
+    } else {
+        creditCard.style.display = 'block';
+        paypal.style.display = 'none';
+        bitcoin.style.display = 'none';
+    }
+}
+
+
+
+
+
+//FORM VALIDATION
+
+const nameError = document.createElement('div');
+nameError.innerHTML="error";
+nameError.insertBefore(nameError, name);
+
+
+function formValidation() {
+
+
+    // create a new div element
+    var newDiv = document.createElement("p");
+    // and give it some content
+    var newContent = document.createTextNode("Hi there and greetings!");
+    // add the text node to the newly created div
+    newDiv.appendChild(newContent);
+
+    // add the newly created element and its content into the DOM
+    var currentDiv = getElementById('test').parentNode;
+    document.body.insertBefore(newDiv, currentDiv);
+
+}
+
+register.addEventListener("click", formValidation, false);
+
+
 });
+
+
+
