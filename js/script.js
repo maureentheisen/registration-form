@@ -247,7 +247,7 @@ function activitiesValidate(){
 }
 
 function ccValidate(){ //checking to make sure there is a credit card number and has the correct number of digits
-    okay = false;
+
     if((ccInput.value.length < 14 || ccInput.value.length > 16) || (isNaN(ccInput.value))){
         divCC.insertBefore(ccError, ccInput.parentNode);
         ccInput.classList.add('inputError');
@@ -298,13 +298,15 @@ function cvvValidate(){//checking to make sure there is a cvv number and has the
 
 //function that runs when the Register button is clicked
 function formValidation(e) {
-        e.preventDefault(); // make sure it doesn't submit until all errors are fixed
-        nameValidate();
-        emailValidate();
-        activitiesValidate();
+    e.preventDefault(); // make sure it doesn't submit until all errors are fixed
+    nameValidate();
+    emailValidate();
+    activitiesValidate();
+    if (paymentType.value === "credit card") {
         ccValidate();
         zipValidate();
         cvvValidate();
+    }
 }
 
 register.addEventListener("click", formValidation, false); //add click event to register button
