@@ -64,38 +64,31 @@ design.addEventListener("change", filterChoice, false);
 
 
 //setting up variables for different timeslots that could have conflicts
-let timeSlot;
+//let timeSlot;
 let tuesdayMorning = 'Tuesday 9am-12pm';
 let tuesdayAfternoon = 'Tuesday 1pm-4pm';
 
-function checkConflict() {
+function checkConflict(e) {
+    target = e.target;
+    label = e.target.parentNode;
+    activitySlot = label.textContent;
 
-    for (let i = 0; i < activities.length; i++) { //go through all activities
-        if (
-            (activities[i].checked) &&
-            (activities[i].parentNode.textContent.includes(tuesdayAfternoon))
-        ) {
-            timeSlot = tuesdayAfternoon;
-        }
-        else if (
-            (activities[i].checked) &&
-            (activities[i].parentNode.textContent.includes(tuesdayMorning))
-        ) {
-            timeSlot = tuesdayMorning;
-        }
+    
 
-        if(activities[i].parentNode.textContent.includes(timeSlot)){
-            activities[i].parentNode.classList.add('disabled'); //if there is a conflict add the class of disabled
-            if((activities[i].parentNode.classList.contains('disabled')) &&
-                (activities[i].checked === false)){
-                actvities[i].disabled = true;
+    if (activitySlot.includes(tuesdayMorning)) {
+        for (let i = 0; i < activities.length; i++) {
+            if (activities[i].parentNode.textContent.includes(tuesdayMorning)) {
+                activities[i].parentNode.classList.add('disabled');
             }
         }
-
     }
-
-
-
+    else if (activitySlot.includes(tuesdayAfternoon)) {
+        for (let j = 0; j < activities.length; j++) {
+            if (activities[j].parentNode.textContent.includes(tuesdayAfternoon)) {
+                activities[j].parentNode.classList.add('disabled');
+            }
+        }
+    }
 }
 
 activity.addEventListener("change", checkConflict, false);
