@@ -73,23 +73,23 @@ function checkConflict(e) {
     label = e.target.parentNode;
     activitySlot = label.textContent;
 
-    
-
     if (activitySlot.includes(tuesdayMorning)) {
         for (let i = 0; i < activities.length; i++) {
             if (activities[i].parentNode.textContent.includes(tuesdayMorning)) {
-                activities[i].parentNode.classList.add('disabled');
+                activities[i].parentNode.classList.toggle('disabled');
             }
         }
     }
     else if (activitySlot.includes(tuesdayAfternoon)) {
         for (let j = 0; j < activities.length; j++) {
             if (activities[j].parentNode.textContent.includes(tuesdayAfternoon)) {
-                activities[j].parentNode.classList.add('disabled');
+                activities[j].parentNode.classList.toggle('disabled');
             }
         }
     }
+
 }
+
 
 activity.addEventListener("change", checkConflict, false);
 
