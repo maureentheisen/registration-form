@@ -127,10 +127,10 @@ function runTotal(e) {
     let target = e.target;
 
     for(let v=0; v < activities.length; v++){
-        if((activities[v].parentNode.textContent.includes("$100")) && (target.checked === true)){
+        if((activities[v].parentNode.textContent.includes("$100")) && (activities[v].checked === true)){
             runningCost = runningCost + 100;
         }
-        else if((activities[v].parentNode.textContent.includes("$200")) && (target.checked === true)){
+        else if((activities[v].parentNode.textContent.includes("$200")) && (activities[v].checked === true)){
             runningCost = runningCost + 200;
         }
     }
