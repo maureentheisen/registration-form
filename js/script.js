@@ -20,6 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const cvvInput = document.getElementById("cvv");
 
 
+
+
 //by default, the other job text field is not displayed
 otherJobTitle.style.display = 'none';
 
@@ -73,25 +75,75 @@ function checkConflict(e) {
     label = e.target.parentNode;
     activitySlot = label.textContent;
 
-    if (activitySlot.includes(tuesdayMorning)) {
+    if ((activitySlot.includes(tuesdayMorning)) && (target.checked === true)) {
         for (let i = 0; i < activities.length; i++) {
-            if (activities[i].parentNode.textContent.includes(tuesdayMorning)) {
-                activities[i].parentNode.classList.toggle('disabled');
+            if ((activities[i].parentNode.textContent.includes(tuesdayMorning)) &&
+                (activities[i].checked === false)) {
+               // activities[i].parentNode.classList.toggle('disabled');
+                activities[i].disabled = true;
             }
         }
     }
-    else if (activitySlot.includes(tuesdayAfternoon)) {
-        for (let j = 0; j < activities.length; j++) {
-            if (activities[j].parentNode.textContent.includes(tuesdayAfternoon)) {
-                activities[j].parentNode.classList.toggle('disabled');
+    else if((activitySlot.includes(tuesdayMorning)) && (target.checked === false)){
+        for (let k = 0; k < activities.length; k++) {
+            if ((activities[k].parentNode.textContent.includes(tuesdayMorning)) &&
+                (activities[k].checked === false)) {
+                // activities[i].parentNode.classList.toggle('disabled');
+                activities[k].disabled = false;
             }
+        }
+
+    }
+    else if ((activitySlot.includes(tuesdayAfternoon)) && (target.checked === true)) {
+        for (let j = 0; j < activities.length; j++) {
+            if ((activities[j].parentNode.textContent.includes(tuesdayAfternoon)) && (activities[j].checked === false)) {
+              //  activities[j].parentNode.classList.toggle('disabled');
+                activities[j].disabled = true;
+            }
+
+        }
+    }
+    else if ((activitySlot.includes(tuesdayAfternoon)) && (target.checked === false)) {
+        for (let m = 0; m < activities.length; m++) {
+            if ((activities[m].parentNode.textContent.includes(tuesdayAfternoon)) && (activities[m].checked === false)) {
+                //  activities[j].parentNode.classList.toggle('disabled');
+                activities[m].disabled = false;
+            }
+
         }
     }
 
 }
 
 
+// setting up variables for the running cost of activities.
+let runningCost = 0;
+const activityFieldset = document.getElementById('activities');
+const activityCost = document.createElement('div');
+activityFieldset.insertBefore(activityCost, activityFieldset.lastChild);
+
+//function for adding up total cost of activities
+function runTotal(e) {
+    let target = e.target;
+
+    for(let v=0; v < activities.length; v++){
+        if((activities[v].parentNode.textContent.includes("$100")) && (target.checked === true)){
+            runningCost = runningCost + 100;
+        }
+        else if((activities[v].parentNode.textContent.includes("$200")) && (target.checked === true)){
+            runningCost = runningCost + 200;
+        }
+    }
+    activityCost.textContent = runningCost ;
+    return runningCost;
+    //setting up variables for getting total cost of activities
+}
+
+
+
+
 activity.addEventListener("change", checkConflict, false);
+activity.addEventListener("change", runTotal, false);
 
 //checking for payment type
 
@@ -104,6 +156,9 @@ paymentType.addEventListener("change", payment, false); //setting an event liste
 function payment() {
     if (paymentType.value === 'select_method') {
         register.disabled = true; //if they haven't chosen a method they can't register
+        paypal.style.display = 'none';
+        creditCard.style.display = 'none';
+        bitcoin.style.display = 'none';
     }
     else if (paymentType.value === 'paypal') { //if they choose the paypal method show the paypal info &  hide others
         paypal.style.display = 'block';
