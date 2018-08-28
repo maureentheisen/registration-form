@@ -125,17 +125,21 @@ activityFieldset.insertBefore(activityCost, activityFieldset.lastChild);
 //function for adding up total cost of activities
 function runTotal(e) {
     let target = e.target;
-
+    runningCost = 0;
     for(let v=0; v < activities.length; v++){
-        if((activities[v].parentNode.textContent.includes("$100")) && (activities[v].checked === true)){
-            runningCost = runningCost + 100;
-        }
-        else if((activities[v].parentNode.textContent.includes("$200")) && (activities[v].checked === true)){
-            runningCost = runningCost + 200;
+        if(activities[v].checked === true){
+            if(activities[v].parentNode.textContent.includes("$100")) {
+                runningCost = runningCost + 100;
+                activityCost.textContent = runningCost ;
+            }
+            else if(activities[v].parentNode.textContent.includes("$200")){
+                runningCost = runningCost + 200;
+                activityCost.textContent = runningCost ;
+            }
         }
     }
-    activityCost.textContent = runningCost ;
-    return runningCost;
+
+
     //setting up variables for getting total cost of activities
 }
 
