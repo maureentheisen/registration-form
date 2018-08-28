@@ -386,9 +386,13 @@ function cvvValidate(){//checking to make sure there is a cvv number and has the
 
 
 function formValidation(e) {
-  if((validName === true) && (validEmail===true) && (validActivity===true) && (validCC ===true) && (validZip===true) && (validCVV===true)){
-    alert('success');
+  if((validName === true) && (validEmail===true) && (validActivity===true) && (paymentType.value !== "credit card")){
+    alert('Successfully Registered');
     return true;
+  }  else if((validName === true) && (validEmail===true) && (validActivity===true) && (paymentType.value === "credit card") && (validCC ===true) && (validZip===true) && (validCVV===true)){
+      alert('Successfully Registered using Credit Card');
+      return true;
+
   }else{
       e.preventDefault();
       nameValidate();
