@@ -191,6 +191,7 @@ function payment() {
 
 
 // set variables for creating an error message when the name field is empty
+
 const nameError = document.createElement('div');
 const nameErrorText = document.createTextNode("Please enter your name");
 const fieldSetBasic = nameInput.parentNode;
@@ -198,27 +199,32 @@ const fieldSetBasic = nameInput.parentNode;
 
 
 // set variables for creating an error message for the email field
+
 const emailError = document.createElement('div');
 const emailErrorText = document.createTextNode("Please enter a valid email");
 
 
 // set variables for creating an error message for the activities
+
 const activitiesError = document.createElement('div');
 const activitiesErrorText = document.createTextNode("Please select at least one activity");
 
 
 // set variables for creating an error message for credit card
+
 const ccError = document.createElement('div');
 const ccErrorText = document.createTextNode("Please enter a valid credit card number");
 const divCC = document.getElementById('credit-card');
 
 
 // set variables for creating an error message for zip code
+
 const zipError = document.createElement('div');
 const zipErrorText = document.createTextNode("Please enter a valid zip code");
 
 
 // set variables for creating an error message for cvv
+
 const cvvError = document.createElement('div');
 const cvvErrorText = document.createTextNode("Please enter a valid CVV");
 
@@ -257,33 +263,54 @@ cvvError.setAttribute('id','cvv-error');
 cvvError.appendChild(cvvErrorText);
 cvvError.classList.add('error');
 
+let validName = false;
+let validEmail = false;
+let validActivity = false;
+let validCC = false;
+let validZip = false;
+let validCVV = false;
 
 function nameValidate(){
-    if(nameInput.value === '') { //if the name is blank add an error message
+
+    if(nameInput.value === '') { //if the name is blank add an error messag
         fieldSetBasic.insertBefore(nameError, nameInput);
         nameInput.classList.add('inputError');
+
     }else if((nameInput.value !== '') &&  (nameError !== null)){ //if there is a name and the error message is there remove it
         nameError.remove();
         nameInput.classList.remove('inputError');
-}
+        return validName = true;
+
+      } else  {
+      return validName = true;
+        }
     }
+
+
 
 
 function emailValidate(){
     var atpos = emailInput.value.indexOf("@"); //set variable for existence of "@" symbol
     var dotpos = emailInput.value.lastIndexOf("."); //set variable for existence of "."
     if(emailInput.value === '') { //error if email is blank
+        let emailValid = false;
         fieldSetBasic.insertBefore(emailError, emailInput);
         emailInput.classList.add('inputError');
+
     } else if(atpos < 1 || dotpos < atpos+2 || dotpos+2 >= emailInput.value.length){ //error is no "@" symbol or "."
         fieldSetBasic.insertBefore(emailError, emailInput);
         emailInput.classList.add('inputError');
+
     }else {
         if (emailError !== null) { //remove error message if the email is valid and exists
             emailError.remove();
             emailInput.classList.remove('inputError');
-        }
-        return;
+            return validEmail = true;
+
+        }else{
+        return validEmail = true;
+      }
+
     }
 }
 
@@ -292,16 +319,19 @@ function activitiesValidate(){
     for(let x=0; x < activities.length; x++) { //loop through all checkboxes
         if (activities[x].checked === true) { //if at least one is check, set okay to true and exit the loop
             okay = true;
+            activitiesError.remove();
+            return validActivity = true;
             break;
         }
     }
     if(okay === false){
+        let activityValid = false;
             activity.insertBefore(activitiesError, activity.childNode); //if there are no checkboxes checked, then add error message
         }
         else if ((okay === true) && (activitiesError !== null)){ //if it's okay, but the error message is there - remove it
             activitiesError.remove();
             okay = true;
-            return;
+
     }
 }
 
@@ -311,30 +341,28 @@ function ccValidate(){ //checking to make sure there is a credit card number and
         divCC.insertBefore(ccError, ccInput.parentNode);
         ccInput.classList.add('inputError');
 
-    } else{
-        if(ccError !== null) { //if the credit card number is there, remove error message
+    } else{ //if the credit card number is there, remove error message
             ccError.remove();
             ccInput.classList.remove('inputError');
-
-        }else {
-
-            return;
+            return validCC = true;
         }
     }
-}
 
 
 function zipValidate(){//checking to make sure there is a zip code number and has the correct number of digits
     if((zipInput.value.length !== 5) || (isNaN(zipInput.value))){
+        let zipValid = false;
         divCC.insertBefore(zipError, ccInput.parentNode);
         zipInput.classList.add('inputError');
     } else{
         if(zipError !== null) {//if the zip code number is there, remove error message
             zipError.remove();
             zipInput.classList.remove('inputError');
-        }else {
-            return;
+            return validZip = true;
+        } else{
+          return validZip = true;
         }
+
     }
 }
 
@@ -342,32 +370,38 @@ function zipValidate(){//checking to make sure there is a zip code number and ha
 
 function cvvValidate(){//checking to make sure there is a cvv number and has the correct number of digits
     if(cvvInput.value.length !== 3){
+        let cvvValid = false;
         divCC.insertBefore(cvvError, ccInput.parentNode);
         cvvInput.classList.add('inputError');
     } else{
         if(cvvError !== null) {//if the cvv number is there, remove error message
             cvvError.remove();
             cvvInput.classList.remove('inputError');
-        }else {
-            return;
+            return validCVV = true;
         }
     }
 }
 
 
-//function that runs when the Register button is clicked
+
+
 function formValidation(e) {
-    e.preventDefault(); // make sure it doesn't submit until all errors are fixed
-    nameValidate();
-    emailValidate();
-    activitiesValidate();
-    if (paymentType.value === "credit card") {
-        ccValidate();
-        zipValidate();
-        cvvValidate();
+  if((validName === true) && (validEmail===true) && (validActivity===true) && (validCC ===true) && (validZip===true) && (validCVV===true)){
+    alert('success');
+    return true;
+  }else{
+      e.preventDefault();
+      nameValidate();
+      emailValidate();
+      activitiesValidate();
+      if (paymentType.value === "credit card") {
+          ccValidate();
+          zipValidate();
+          cvvValidate();
     }
+  }
+
 }
 
 register.addEventListener("click", formValidation, false); //add click event to register button
-
 });
